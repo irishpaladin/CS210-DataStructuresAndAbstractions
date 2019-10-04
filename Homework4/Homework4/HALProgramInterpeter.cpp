@@ -2,35 +2,42 @@
 #include <string>
 #include <fstream>
 #include <array>
+#include "InstructionClass.h"
 using namespace std;
 
 int main() {
-		//input file needed
-		string filename;
-		cout << "Enter Filename: ";
-		getline(cin, filename);
+		
 
-		//read file
-		string line;
-		ifstream myfile(filename);
+	InstructionClass instuction;
+	
 
-		if (myfile.good())
+	//input file needed
+	string filename;
+	cout << "Enter Filename: ";
+	getline(cin, filename);
+
+	//read file
+	string line;
+	ifstream myfile(filename);
+
+	if (myfile.good())
+	{
+		while (getline(myfile, line))
 		{
-			while (getline(myfile, line))
-			{
-				//removing comment
-				//line.erase(std::find(line.begin(), line.end(), '/'), line.end());
-				//removing whitespaces
-				//line.erase(remove_if(line.begin(), line.end(), ::isspace), line.end());
-				cout << line << endl;
+			//removing comment
+			//line.erase(std::find(line.begin(), line.end(), '/'), line.end());
+			//removing whitespaces
+			//line.erase(remove_if(line.begin(), line.end(), ::isspace), line.end());
+			cout << line << endl;
 				
 
-			}
-			myfile.close();
+		}
+		myfile.close();
+
 
 			
-		}
-		else cout << "Invalid input file!\n";
+	}
+	else cout << "Invalid input file!\n";
 
 	return 0;
 }

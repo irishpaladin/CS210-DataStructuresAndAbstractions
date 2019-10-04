@@ -18,8 +18,16 @@
     <ClCompile Include="HALProgramInterpeter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="InstructionClass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="halprogram.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="InstructionClass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

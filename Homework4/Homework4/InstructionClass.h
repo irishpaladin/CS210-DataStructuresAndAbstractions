@@ -6,10 +6,11 @@ using namespace std;
 
 const int MAX_LENGTH = 100;
 
+
 struct Instruction;
 struct Instruction {
 	string operation;
-	char operand;
+	char* operand;
 };
 
 class InstructionClass
@@ -20,7 +21,8 @@ private:
 
 public:
 	InstructionClass();
-	void setInstructionElement(int index, string operation, char operand);
+	~InstructionClass();
+	void setInstructionElement(int index, string operation1, string operand1);
 
 	void Display() const;
 };

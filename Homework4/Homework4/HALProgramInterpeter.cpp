@@ -1,39 +1,67 @@
 #include <iostream>
-#include <string>
+#include <string> //for getline
 #include <fstream>
-#include <array>
+#include <sstream> //for stringstream (splitting strings)
 #include "InstructionClass.h"
 using namespace std;
 
+
 int main() {
-		
-
-	InstructionClass instuction;
+	//initializing elements
+	InstructionClass instuction_table;
 	
-
 	//input file needed
-	string filename;
-	cout << "Enter Filename: ";
-	getline(cin, filename);
+	//string filename;
+	//cout << "Enter Filename: ";
+	//getline(cin, filename);
+
+	string filename = "halprogram.txt";
 
 	//read file
 	string line;
 	ifstream myfile(filename);
 
+
+	// stores the hal program in the InstructionClass
+	string value = ""; //temp variable that stores an element in the line
+	int element = 0; //counter on what element is being added [index,operation,operand]
+	//temp variables needed
+	int index = 0;
+	string operation;
+	string operand="";
+
 	if (myfile.good())
 	{
 		while (getline(myfile, line))
 		{
-			//removing comment
-			//line.erase(std::find(line.begin(), line.end(), '/'), line.end());
-			//removing whitespaces
-			//line.erase(remove_if(line.begin(), line.end(), ::isspace), line.end());
-			cout << line << endl;
-				
-
+			stringstream ssIn(line);
+			for (int i = 0; ssIn.good(); i++) {
+				string s;
+				ssIn >> s;
+				if (i == 0) {
+					index = stoi(s);
+				}
+				else if (i == 1) {
+					operation = s;
+				}
+				else if(i>2){
+					operand.append(" ");
+					operand.append(s);
+				}
+				else {
+					operand += s;
+				}
+			}
+			
+			//cout << "line: " << line << endl;
+			/*cout << "index: " << index << endl;
+			cout << "operation: " << operation << endl;
+			cout << "operand: \"" << operand <<"\"" <<endl << endl;*/
+			instuction_table.setInstructionElement(index, operation, operand);
+			operand = "";//reinitialize operand as an empty string
 		}
 		myfile.close();
-
+		instuction_table.Display();
 
 			
 	}

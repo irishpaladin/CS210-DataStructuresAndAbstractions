@@ -28,11 +28,11 @@ public:
 	int Length()const;
 	bool IsEmpty()const;
 	bool IsFull()const;
-	void InsertUnsorted(string s, int x);
-	bool FindUnsorted(string s, int x);
+	//void InsertUnsorted(string s, int x);
+	//bool FindUnsorted(string s, int x);
 	//void DeleteUnsorted();
-	//void InsertSorted(DataType x);
-	//bool FindSorted(DataType x);
+	void InsertSorted(string s, int x);
+	bool FindSorted(string s);
 	//void DeleteSorted();
 	void Clear();
 

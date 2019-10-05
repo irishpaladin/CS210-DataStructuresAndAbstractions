@@ -7,6 +7,10 @@ using namespace std;
 
 
 int main() {
+
+
+
+
 	//initializing elements
 	InstructionClass instuction_table;
 	
@@ -57,7 +61,7 @@ int main() {
 			/*cout << "index: " << index << endl;
 			cout << "operation: " << operation << endl;
 			cout << "operand: \"" << operand <<"\"" <<endl << endl;*/
-			instuction_table.setInstructionElement(index, operation, operand);
+			instuction_table.InsertUnsorted(index, operation, operand);
 			operand = "";//reinitialize operand as an empty string
 		}
 		myfile.close();

@@ -87,30 +87,30 @@ bool SymbolTable::IsFull()const {
 	else return false;
 }
 
-void SymbolTable::InsertUnsorted(string s, int x) {
-	// inserts a new element at the end of the list
-	// always call IsFull prior to calling InsertUnsorted
-	// sets p
-	p = length;
-	symbols[p].symbol = s;
-	symbols[p].value = x;
-	length++;
-	return;
-}
+//void SymbolTable::InsertUnsorted(string s, int x) {
+//	// inserts a new element at the end of the list
+//	// always call IsFull prior to calling InsertUnsorted
+//	// sets p
+//	p = length;
+//	symbols[p].symbol = s;
+//	symbols[p].value = x;
+//	length++;
+//	return;
+//}
 
-bool SymbolTable::FindUnsorted(string s, int x) {
-	// always call IsEmpty prior to calling FindUnsorted
-	// sets p
-	p = 0;
-	while (p < length) {
-		if (s == symbols[p].symbol && x == symbols[p].value) {
-			return true;
-		}
-		p++;
-	}
-	return false;
-
-}
+//bool SymbolTable::FindUnsorted(string s, int x) {
+//	// always call IsEmpty prior to calling FindUnsorted
+//	// sets p
+//	p = 0;
+//	while (p < length) {
+//		if (s == symbols[p].symbol && x == symbols[p].value) {
+//			return true;
+//		}
+//		p++;
+//	}
+//	return false;
+//
+//}
 //void SymbolTable::DeleteUnsorted() {
 //	// deletes element pointed to by p
 //	// p must be set prior to calling DeleteUnsorted
@@ -122,6 +122,43 @@ bool SymbolTable::FindUnsorted(string s, int x) {
 //}
 
 
+
+void SymbolTable::InsertSorted(string s, int x) {
+	// inserts a new element into the list in sorted order
+	// always call IsFull prior to calling InsertSorted
+	// p will point to where the new element should be inserted
+	// moves all elements to the right of p one element to the right to make space for the new element
+	// sets p
+	p = 0;
+	while (p < length && s > symbols[p].symbol) {
+		p++;
+	}
+	int q = length;
+	while (q > p) {
+		symbols[q].symbol = symbols[q - 1].symbol;
+		symbols[q].value = symbols[q - 1].value;
+		q--;
+	}
+	symbols[p].symbol = s;
+	symbols[p].value = x;
+	length++;
+	return;
+}
+
+bool SymbolTable::FindSorted(string s) {
+	// always call IsEmpty prior to calling FindUnsorted
+	// sets p
+	p = 0;
+	while (p < length) {
+		if (s == symbols[p].symbol) {
+			return true;
+		}
+		p++;
+	}
+	return false;
+
+
+}
 
 void SymbolTable::Clear() {
 	// reinitializes the list

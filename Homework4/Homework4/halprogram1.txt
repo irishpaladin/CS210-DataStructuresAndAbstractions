@@ -1,0 +1,23 @@
+0 declare a
+1 declare b
+2 declare c
+3 push 3
+4 set b
+5 get a
+6 read
+7 add
+8 set a
+9 push 1
+10 get b
+11 subtract
+12 set b
+13 get b
+14 get c
+15 compare
+16 jumpequal 18
+17 jump 5
+18 writestring the sum is:
+19 get a
+20 write
+21 writenl
+22 end

@@ -1,23 +1,28 @@
 0 declare a
 1 declare b
 2 declare c
-3 push 3
-4 set b
-5 get a
+3 declare d
+4 push -1
+5 set d
 6 read
-7 add
-8 set a
-9 push 1
-10 get b
-11 subtract
-12 set b
+7 set b
+8 get b
+9 get d
+10 compare
+11 jumpequal 21
+12 get a
 13 get b
-14 get c
-15 compare
-16 jumpequal 18
-17 jump 5
-18 writestring the sum is:
-19 get a
-20 write
-21 writenl
-22 end
+14 add
+15 set a
+16 push 1
+17 get c
+18 add
+19 set c
+20 jump 6
+21 writestring the average is:
+22 get a
+23 get c
+24 divide
+25 write
+26 writenl
+27 end

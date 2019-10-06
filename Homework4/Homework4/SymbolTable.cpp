@@ -90,42 +90,6 @@ bool SymbolTable::IsFull()const {
 	else return false;
 }
 
-//void SymbolTable::InsertUnsorted(string s, int x) {
-//	// inserts a new element at the end of the list
-//	// always call IsFull prior to calling InsertUnsorted
-//	// sets p
-//	p = length;
-//	symbols[p].symbol = s;
-//	symbols[p].value = x;
-//	length++;
-//	return;
-//}
-
-//bool SymbolTable::FindUnsorted(string s, int x) {
-//	// always call IsEmpty prior to calling FindUnsorted
-//	// sets p
-//	p = 0;
-//	while (p < length) {
-//		if (s == symbols[p].symbol && x == symbols[p].value) {
-//			return true;
-//		}
-//		p++;
-//	}
-//	return false;
-//
-//}
-//void SymbolTable::DeleteUnsorted() {
-//	// deletes element pointed to by p
-//	// p must be set prior to calling DeleteUnsorted
-//	// always call IsPSet prior to calling DeleteUnsorted
-//	// moves the last element into the element pointed to by p
-//	a[p] = a[length - 1];
-//	length--;
-//	return;
-//}
-
-
-
 void SymbolTable::InsertSorted(string s, int x) {
 	// inserts a new element into the list in sorted order
 	// always call IsFull prior to calling InsertSorted
@@ -173,24 +137,4 @@ void SymbolTable::Clear() {
 	p = -1;
 	return;
 }
-
-void SymbolTable::Display()const {
-	//Displays value of P, Length and items of the array list
-	cout << endl << endl;
-	int length = Length();
-	cout << "Symbol Table" << endl;
-	cout << "   Value of P     : " << p << endl;
-	cout << "   Value of Length: " << length << endl;
-	cout << "   The content of the current list is: " << endl;
-	if (IsEmpty()) {
-		cout << "   There is no element yet." << endl;
-	}
-	else {
-		for (int i = 0; i < length; i++) {
-			cout <<"["<<i<< "] symbol: " << symbols[i].symbol <<"   value: "<<symbols[i].value<<endl<<endl;
-		}
-		cout << endl;
-	}
-}
-
 

@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string> //for getline
-#include <fstream>
+#include <fstream> //for reading file input
 #include <sstream> //for stringstream (splitting strings)
 #include "InstructionClass.h"
 #include "SymbolTable.h"
@@ -11,30 +11,24 @@ using namespace std;
 
 int main() {
 
-
-
-
 	//initializing elements
 	InstructionClass instruction_table;
 	SymbolTable symbol_table;
 	StackClass stack;
 	
 	//input file needed
-	//string filename;
-	//cout << "Enter Filename: ";
-	//getline(cin, filename);
+	string filename;
+	cout << "Enter Filename: ";
+	getline(cin, filename);
 
-	string filename = "halprogram.txt";
-
-	//read file
-	string line;
+	//reading file
+	string line; //temp variable that stores each line in the file
 	ifstream myfile(filename);
 
-
 	// storing  the hal program txt in the InstructionClass
-	//temp variables needed
-	int index = 0;
-	string operation;
+	//temp variables needed for adding into the instuction class
+	int index = 0; //index of the instruction
+	string operation; 
 	string operand="";
 
 	if (myfile.good())
@@ -43,15 +37,15 @@ int main() {
 		{
 			stringstream ssIn(line); // separates the string via spaces
 			for (int i = 0; ssIn.good(); i++) {
-				string s;
+				string s; //temp variable for the "word"
 				ssIn >> s;
-				if (i == 0) {
+				if (i == 0) { //storing index
 					index = stoi(s);
 				}
-				else if (i == 1) {
+				else if (i == 1) { //storing operation
 					operation = s;
 				}
-				else if(i>2){
+				else if(i>2){ //storing operand
 					operand.append(" ");
 					operand.append(s);
 				}
@@ -62,23 +56,16 @@ int main() {
 			instruction_table.InsertUnsorted(index, operation, operand);
 			operand = "";//reinitialize operand as an empty string
 		}
-		myfile.close();
-		//done reading file
+		myfile.close(); //done reading file
 
-		instruction_table.Display();
-
-		//solving problem
-		
-
+		//interpreting HAL program
 		//get the initial instruction
 		Instruction curr_instruction; //instruction that will be used
 		int status = -1;
-		instruction_table.ResetP();
-		
-
-		cout << " " << instruction_table.GetP();
+		instruction_table.ResetP();		
 
 		do{
+			//storing instruction that will be used
 			instruction_table.Iterate();
 			if (instruction_table.IsPSet()) {
 				curr_instruction = instruction_table.Read();
@@ -87,15 +74,18 @@ int main() {
 			else {
 				operation = "invalid";
 			}
+
+			//displays the index of the instruction that will be used
 			cout << " " << instruction_table.GetP();
 
+			//do the operation
 			if (operation == "declare") {
 				operand = curr_instruction.operand;
 				symbol_table.InsertSorted(operand, 0);
 			}
 			else if (operation == "read") {
 				int temp_val;
-				cout << "Enter Value: ";
+				cout << " Enter Value: ";
 				cin >> temp_val;
 				if (!stack.IsFull())
 					stack.Push(temp_val);
@@ -186,14 +176,12 @@ int main() {
 				instruction_table.SetP(stoi(operand) - 1);//-1 to compensate for the iterate at the end
 			}
 			else if (operation == "invalid") {
-				cout << "   Something went wrong";
+				cout << "   Something is wrong";
 				exit(1);
 			}
 	
 		}
 		while (operation != "end");
-
-		symbol_table.Display();
 		
 	}
 	else cout << "Invalid input file!\n";

@@ -98,14 +98,3 @@ void InstructionClass::InsertUnsorted(int index, string operation1, string opera
 	return;
 }
 
-
-void InstructionClass::Display() const
-{
-	cout << endl << endl;
-	for (int i = 0; i < 23; i++) {
-		cout << i << " : " << instruction[i].operation
-			<< " : ";
-		string s = instruction[i].operand;
-		cout <<"\'"<< s<<"\'" << endl << endl;
-	}
-}

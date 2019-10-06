@@ -30,15 +30,6 @@ public:
 	bool IsEmpty()const;
 	bool IsFull()const;
 	void InsertUnsorted(int index, string operation1, string operand1);
-	//bool FindUnsorted(string operation);
-	//void DeleteUnsorted();
-	//void InsertSorted(DataType x);
-	//bool FindSorted(DataType x);
-	//void DeleteSorted();
-	//void Clear();
-
-	void Display() const;
-
 
 private:
 	int pc; //program counter

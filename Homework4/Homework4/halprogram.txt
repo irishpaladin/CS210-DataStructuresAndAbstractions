@@ -20,8 +20,8 @@
 19 set c
 20 jump 6
 21 writestring the average is:
-22 get a
-23 get c
+22 get c
+23 get a
 24 divide
 25 write
 26 writenl

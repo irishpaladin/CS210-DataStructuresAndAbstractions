@@ -28,15 +28,9 @@ public:
 	int Length()const;
 	bool IsEmpty()const;
 	bool IsFull()const;
-	//void InsertUnsorted(string s, int x);
-	//bool FindUnsorted(string s, int x);
-	//void DeleteUnsorted();
 	void InsertSorted(string s, int x);
 	bool FindSorted(string s);
-	//void DeleteSorted();
 	void Clear();
-
-	void Display()const;
 
 private:
 	int p;

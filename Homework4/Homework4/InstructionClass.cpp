@@ -86,7 +86,9 @@ bool InstructionClass::IsFull()const {
 
 void InstructionClass::InsertUnsorted(int index, string operation1, string operand1)
 {
-	//sets the operation and operand of instruction in index 'index'
+	// inserts a new element in the list
+	// always call IsFull prior to calling InsertUnsorted
+	// sets the operation and operand of instruction in index 'index'
 	instruction[index].operation = operation1; 
 
 	if (operand1.length() != 0) {

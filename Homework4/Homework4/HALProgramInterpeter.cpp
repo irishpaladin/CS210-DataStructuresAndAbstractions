@@ -8,6 +8,8 @@
 
 using namespace std;
 
+void ErrorNeedToTerminate(string error_type, string error);
+bool isValidVariable(string var);
 
 int main() {
 
@@ -41,6 +43,9 @@ int main() {
 				ssIn >> s;
 				if (i == 0) { //storing index
 					index = stoi(s);
+					if (index < 0 || index >= 100) {
+						ErrorNeedToTerminate("invalid", "index");
+					}
 				}
 				else if (i == 1) { //storing operation
 					operation = s;
@@ -53,7 +58,12 @@ int main() {
 					operand += s;
 				}
 			}
-			instruction_table.InsertUnsorted(index, operation, operand);
+			//will terminate the program if given hal program has 100+ instruction
+			if (!instruction_table.IsFull())
+				instruction_table.InsertUnsorted(index, operation, operand);
+			else {
+				ErrorNeedToTerminate("toomuch", "instruction");
+			}
 			operand = "";//reinitialize operand as an empty string
 		}
 		myfile.close(); //done reading file
@@ -81,7 +91,12 @@ int main() {
 			//do the operation
 			if (operation == "declare") {
 				operand = curr_instruction.operand;
-				symbol_table.InsertSorted(operand, 0);
+				if (!isValidVariable(operand))ErrorNeedToTerminate("invalid", "variable");
+				if (!symbol_table.IsFull())
+					symbol_table.InsertSorted(operand, 0);
+				else {
+					ErrorNeedToTerminate("toomuch", "variables");
+				}
 			}
 			else if (operation == "read") {
 				int temp_val;
@@ -89,67 +104,92 @@ int main() {
 				cin >> temp_val;
 				if (!stack.IsFull())
 					stack.Push(temp_val);
+				else
+					ErrorNeedToTerminate("toomuch", "value in stack");
+
 			}
 			else if (operation == "push") {
 				operand = curr_instruction.operand;
 				int temp_val = stoi(operand);
 				if (!stack.IsFull())
 					stack.Push(temp_val);
+				else
+					ErrorNeedToTerminate("toomuch", "value in stack");
 			}
 			else if (operation == "get") {
 				operand = curr_instruction.operand;
-				if (!symbol_table.IsEmpty()&& symbol_table.FindSorted(operand)&& !stack.IsFull()) {
-					stack.Push(symbol_table.Read());	
+				if (!symbol_table.IsEmpty()&& symbol_table.FindSorted(operand)) {
+					if (!stack.IsFull())
+						stack.Push(symbol_table.Read());
+					else
+						ErrorNeedToTerminate("toomuch", "value in stack");
 				}
+				else
+					ErrorNeedToTerminate("invalidhal", "");
 			}
 			else if (operation == "add") {
 				int temp_val1, temp_val2;
 				if (!stack.IsEmpty()) 
 					temp_val1 = stack.Pop();
+				else ErrorNeedToTerminate("invalidhal", "");
 				if(!stack.IsEmpty())
 					temp_val2 = stack.Pop();
+				else ErrorNeedToTerminate("invalidhal", "");
 				if(!stack.IsFull())
 					stack.Push(temp_val1 + temp_val2);
+				else ErrorNeedToTerminate("toomuch", "value in stack");
 			}
 			else if (operation == "multiply") {
 				int temp_val1, temp_val2;
 				if (!stack.IsEmpty())
 					temp_val1 = stack.Pop();
+				else ErrorNeedToTerminate("invalid", "");
 				if (!stack.IsEmpty())
 					temp_val2 = stack.Pop();
+				else ErrorNeedToTerminate("invalid", "");
 				if (!stack.IsFull())
 					stack.Push(temp_val1 * temp_val2);
+				else ErrorNeedToTerminate("toomuch", "value in stack");
 			}
 			else if (operation == "subtract") {
-				int temp_val1,temp_val2;
+				int temp_val1, temp_val2;
 				if (!stack.IsEmpty())
 					temp_val1 = stack.Pop();
+				else ErrorNeedToTerminate("invalidhal", "");
 				if (!stack.IsEmpty())
 					temp_val2 = stack.Pop();
+				else ErrorNeedToTerminate("invalidhal", "");
 				if (!stack.IsFull())
 					stack.Push(temp_val1 - temp_val2);
+				else ErrorNeedToTerminate("toomuch", "value in stack");
 			}
 			else if (operation == "divide") {
 				int temp_val1, temp_val2;
 				if (!stack.IsEmpty())
 					temp_val1 = stack.Pop();
+				else ErrorNeedToTerminate("invalidhal", "");
 				if (!stack.IsEmpty())
 					temp_val2 = stack.Pop();
+				else ErrorNeedToTerminate("invalidhal", "");
 				if (!stack.IsFull())
 					stack.Push(temp_val1 / temp_val2);
+				else ErrorNeedToTerminate("toomuch", "value in stack");
 			}
 			else if (operation == "set") {
 				operand = curr_instruction.operand;
 				int temp_val;
-				 if (!stack.IsEmpty())
+				if (!stack.IsEmpty())
 					temp_val = stack.Pop();
-				 if (!symbol_table.IsEmpty() && symbol_table.FindSorted(operand)&&symbol_table.IsPSet()) {
-					 symbol_table.Write(temp_val);
-				 }
+				else ErrorNeedToTerminate("invalidhal", "");
+				if (!symbol_table.IsEmpty() && symbol_table.FindSorted(operand) && symbol_table.IsPSet()) {
+					symbol_table.Write(temp_val);
+				}
+				else ErrorNeedToTerminate("invalidhal", "");
 			}
 			else if (operation == "write") {
 				if (!stack.IsEmpty())
 					cout<< stack.Pop();
+				else ErrorNeedToTerminate("invalidhal", "");
 			}
 			else if (operation == "writestring") {
 				cout << curr_instruction.operand;
@@ -161,8 +201,10 @@ int main() {
 				int temp_val1, temp_val2;
 				if (!stack.IsEmpty())
 					temp_val1 = stack.Pop();
+				else ErrorNeedToTerminate("invalidhal", "");
 				if (!stack.IsEmpty())
 					temp_val2 = stack.Pop();
+				else ErrorNeedToTerminate("invalidhal", "");
 				status = temp_val1 == temp_val2 ? 1 : 0;
 			}
 			else if (operation == "jumpequal") {
@@ -175,9 +217,11 @@ int main() {
 				operand = curr_instruction.operand;
 				instruction_table.SetP(stoi(operand) - 1);//-1 to compensate for the iterate at the end
 			}
-			else if (operation == "invalid") {
-				cout << "   Something is wrong";
-				exit(1);
+			else if (operation == "end") {
+			// dont do anything. leaving it to while condition
+			}
+			else {
+			ErrorNeedToTerminate("invalidhal", "");
 			}
 	
 		}
@@ -188,4 +232,25 @@ int main() {
 
 
 	return 0;
+}
+
+void ErrorNeedToTerminate(string error_type, string error) {
+	if (error_type == "toomuch") {
+		cout << "\nHAL program has too many " << error << ". I can't take it!\n";
+	}
+	else if (error_type == "invalidhal") {
+		cout << "\nSomething is wrong with your hal program not me!\n";
+	}
+	else if (error_type == "invalid") {
+		cout << "\n HAL program has invalid " << error << ". I don't accept such thing.\n";
+	}
+	exit(1);
+}
+bool isValidVariable(string var) {
+	if (var == "") return false;
+	if (!isalpha(var[0])) return false;
+	for (int i = 1; i < var.length(); i++) {
+		if (!isalpha(var[i]) || !isdigit(var[i]))return false;
+	}
+	return true;
 }

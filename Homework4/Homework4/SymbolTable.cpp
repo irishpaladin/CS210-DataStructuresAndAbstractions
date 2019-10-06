@@ -2,13 +2,6 @@
 #include <cstdlib>
 using namespace std;
 
-//---------------------------------------------------
-//List Element Members
-//---------------------------------------------------
-//ListElement::ListElement(int _datum, ListElement * _next):
-//   datum (_datum), next (_next)
-//{}
-
 
 SymbolTable::SymbolTable() {
 	// this is the constructor

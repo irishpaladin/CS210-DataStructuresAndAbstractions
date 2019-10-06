@@ -10,7 +10,6 @@ using namespace std;
 
 
 int main() {
-	
 
 
 
@@ -72,12 +71,24 @@ int main() {
 		
 
 		//get the initial instruction
-		Instruction curr_instruction = instruction_table.Read();
-		operation = curr_instruction.operation;
+		Instruction curr_instruction; //instruction that will be used
+		int status = -1;
+		instruction_table.ResetP();
+		
 
-		cout << "instruction index: " << instruction_table.GetP() << endl;
+		cout << " " << instruction_table.GetP();
 
-		while (operation != "end") {
+		do{
+			instruction_table.Iterate();
+			if (instruction_table.IsPSet()) {
+				curr_instruction = instruction_table.Read();
+				operation = curr_instruction.operation;
+			}
+			else {
+				operation = "invalid";
+			}
+			cout << " " << instruction_table.GetP();
+
 			if (operation == "declare") {
 				operand = curr_instruction.operand;
 				symbol_table.InsertSorted(operand, 0);
@@ -120,7 +131,7 @@ int main() {
 					stack.Push(temp_val1 * temp_val2);
 			}
 			else if (operation == "subtract") {
-				int temp_val1, temp_val2;
+				int temp_val1,temp_val2;
 				if (!stack.IsEmpty())
 					temp_val1 = stack.Pop();
 				if (!stack.IsEmpty())
@@ -162,16 +173,25 @@ int main() {
 					temp_val1 = stack.Pop();
 				if (!stack.IsEmpty())
 					temp_val2 = stack.Pop();
-
+				status = temp_val1 == temp_val2 ? 1 : 0;
 			}
-
-
-			instruction_table.Iterate();
-			curr_instruction = instruction_table.Read();
-			operation = curr_instruction.operation;
-			cout << "instruction index: " << instruction_table.GetP() << endl;
+			else if (operation == "jumpequal") {
+				operand = curr_instruction.operand;
+				if (status == 1)
+					instruction_table.SetP(stoi(operand)-1);//-1 to compensate for the iterate at the end
+				status = -1;
+			}
+			else if (operation == "jump") {
+				operand = curr_instruction.operand;
+				instruction_table.SetP(stoi(operand) - 1);//-1 to compensate for the iterate at the end
+			}
+			else if (operation == "invalid") {
+				cout << "   Something went wrong";
+				exit(1);
+			}
+	
 		}
-		
+		while (operation != "end");
 
 		symbol_table.Display();
 		

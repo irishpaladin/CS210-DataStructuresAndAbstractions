@@ -7,7 +7,7 @@ InstructionClass::InstructionClass()
 	//initialize values
 	length = 0;
 	pc = 0;
-	for (int i = 0; i < MAX_LENGTH; i++) {
+	for (int i = 0; i < I_MAX_LENGTH; i++) {
 		instruction[i].operation = "";
 		instruction[i].operand = &null;
 	}
@@ -18,7 +18,7 @@ InstructionClass::~InstructionClass()
 {
 	//class destructor
 	//deletes the allocated values
-	for (int i = 0; i < MAX_LENGTH; i++) {
+	for (int i = 0; i < I_MAX_LENGTH; i++) {
 		if(instruction[i].operand!=&null)delete instruction[i].operand;
 	}
 }
@@ -57,13 +57,12 @@ void InstructionClass::SetP(int q) {
 	pc = q;
 	return;
 }
-char* InstructionClass::Read()const {
-	// returns the value of the element pointed to by p
-	// p must be set prior to calling Read
+Instruction InstructionClass::Read() const {
+	// returns the operand pointed to by pc
+	// pc must be set prior to calling Read
 	// always call IsPSet prior to calling Read
-	return instruction[pc].operand;
+	return instruction[pc];
 }
-
 
 int InstructionClass::Length()const {
 	// returns the number of elements in the list
@@ -79,7 +78,7 @@ bool InstructionClass::IsEmpty()const {
 
 bool InstructionClass::IsFull()const {
 	// checks whether the list is full
-	if (length == MAX_LENGTH)
+	if (length == I_MAX_LENGTH)
 		return true;
 	else return false;
 }
@@ -95,7 +94,7 @@ void InstructionClass::InsertUnsorted(int index, string operation1, string opera
 		instruction[index].operand = new char[size]; //allocating memory for the pointer
 		strcpy_s(instruction[index].operand, sizeof(char) * size, &operand1[0]); //copy the operand1 to the memory of instruction[index]
 	}
-	
+	length++;
 	return;
 }
 

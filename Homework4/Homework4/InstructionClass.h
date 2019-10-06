@@ -4,7 +4,7 @@
 #include <iostream>
 using namespace std;
 
-const int MAX_LENGTH = 100;
+const int I_MAX_LENGTH = 100;
 
 
 struct Instruction;
@@ -24,7 +24,7 @@ public:
 	bool IsPSet()const;
 	int GetP()const;
 	void SetP(int q);
-	char* Read()const;
+	Instruction Read()const;
 	//void Write(string s, int x);
 	int Length()const;
 	bool IsEmpty()const;
@@ -43,7 +43,7 @@ public:
 private:
 	int pc; //program counter
 	int length;
-	Instruction instruction[MAX_LENGTH];
+	Instruction instruction[I_MAX_LENGTH];
 	
 };
 #endif // !INSTRUCTIONCLASS_H

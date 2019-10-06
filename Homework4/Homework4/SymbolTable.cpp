@@ -15,6 +15,10 @@ SymbolTable::SymbolTable() {
 	// initializes the list
 	length = 0;
 	p = -1;
+	for (int i = 0; i < MAX_LENGTH; i++) {
+		symbols[i].symbol = "";
+		symbols[i].value = 0;
+	}
 }
 
 void SymbolTable::ResetP() {
@@ -58,12 +62,11 @@ int SymbolTable::Read()const {
 	return symbols[p].value;
 }
 
-void SymbolTable::Write(string s, int x) {
+void SymbolTable::Write(int x) {
 	// writes a new value into the element pointed to by p
 	// p must be set prior to calling Write
 	// always call IsPSet prior to calling Write
 	// could cause a problem in a sorted list if the key is changed
-	symbols[p].symbol=s;
 	symbols[p].value = x;
 	return;
 }
@@ -145,19 +148,23 @@ void SymbolTable::InsertSorted(string s, int x) {
 	return;
 }
 
-bool SymbolTable::FindSorted(string s) {
-	// always call IsEmpty prior to calling FindUnsorted
+bool SymbolTable::FindSorted(string x) {
+	// binary search
+	// always call IsEmpty prior to calling FindSorted
 	// sets p
-	p = 0;
-	while (p < length) {
-		if (s == symbols[p].symbol) {
+	int q = 0;
+	int r = length - 1;
+	while (q <= r){
+		p = (q + r) / 2;
+		if (x < symbols[p].symbol)
+			r = p - 1;
+		else if (x > symbols[p].symbol)
+			q = p + 1;
+		else
 			return true;
-		}
-		p++;
-	}
+				
+	}	
 	return false;
-
-
 }
 
 void SymbolTable::Clear() {
@@ -167,10 +174,11 @@ void SymbolTable::Clear() {
 	return;
 }
 
-void SymbolTable::DisplayArrayListValues()const {
+void SymbolTable::Display()const {
 	//Displays value of P, Length and items of the array list
 	cout << endl << endl;
 	int length = Length();
+	cout << "Symbol Table" << endl;
 	cout << "   Value of P     : " << p << endl;
 	cout << "   Value of Length: " << length << endl;
 	cout << "   The content of the current list is: " << endl;
@@ -179,7 +187,7 @@ void SymbolTable::DisplayArrayListValues()const {
 	}
 	else {
 		for (int i = 0; i < length; i++) {
-			cout <<"["<<i<< "] symbol: " << symbols[i].symbol <<"value: "<<symbols[i].value<<endl<<endl;
+			cout <<"["<<i<< "] symbol: " << symbols[i].symbol <<"   value: "<<symbols[i].value<<endl<<endl;
 		}
 		cout << endl;
 	}

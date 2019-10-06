@@ -24,7 +24,7 @@ public:
 	int GetP()const;
 	void SetP(int q);
 	int Read()const;
-	void Write(string s, int x);
+	void Write(int x);
 	int Length()const;
 	bool IsEmpty()const;
 	bool IsFull()const;
@@ -36,7 +36,7 @@ public:
 	//void DeleteSorted();
 	void Clear();
 
-	void DisplayArrayListValues()const;
+	void Display()const;
 
 private:
 	int p;

@@ -1,4 +1,5 @@
 #include "InstructionClass.h"
+#include <cstring>
 char null = '\0'; //initial values of operands are pointed in here
 
 InstructionClass::InstructionClass()
@@ -94,7 +95,7 @@ void InstructionClass::InsertUnsorted(int index, string operation1, string opera
 	if (operand1.length() != 0) {
 		int size = operand1.length() + 1; //number of characters in string +1 for '\0'
 		instruction[index].operand = new char[size]; //allocating memory for the pointer
-		strcpy_s(instruction[index].operand, sizeof(char) * size, &operand1[0]); //copy the operand1 to the memory of instruction[index]
+		strcpy(instruction[index].operand, operand1.c_str()); //copy the operand1 to the memory of instruction[index]
 	}
 	length++;
 	return;

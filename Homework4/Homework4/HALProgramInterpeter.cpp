@@ -2,6 +2,7 @@
 #include <string> //for getline
 #include <fstream> //for reading file input
 #include <sstream> //for stringstream (splitting strings)
+#include <cstdlib> //atoi
 #include "InstructionClass.h"
 #include "SymbolTable.h"
 #include "StackClass.h"
@@ -25,7 +26,7 @@ int main() {
 
 	//reading file
 	string line; //temp variable that stores each line in the file
-	ifstream myfile(filename);
+	ifstream myfile(filename.c_str());
 
 	// storing  the hal program txt in the InstructionClass
 	//temp variables needed for adding into the instuction class
@@ -42,7 +43,7 @@ int main() {
 				string s; //temp variable for the "word"
 				ssIn >> s;
 				if (i == 0) { //storing index
-					index = stoi(s);
+					index = atoi(s.c_str());
 					if (index < 0 || index >= 100) {
 						ErrorNeedToTerminate("invalid", "index");
 					}
@@ -72,6 +73,8 @@ int main() {
 		//get the initial instruction
 		Instruction curr_instruction; //instruction that will be used
 		int status = -1;
+		int temp_val1 = 0;
+		int temp_val2 = 0;
 		instruction_table.ResetP();		
 
 		do{
@@ -99,20 +102,20 @@ int main() {
 				}
 			}
 			else if (operation == "read") {
-				int temp_val;
+				
 				cout << " Enter Value: ";
-				cin >> temp_val;
+				cin >> temp_val1;
 				if (!stack.IsFull())
-					stack.Push(temp_val);
+					stack.Push(temp_val1);
 				else
 					ErrorNeedToTerminate("toomuch", "value in stack");
 
 			}
 			else if (operation == "push") {
 				operand = curr_instruction.operand;
-				int temp_val = stoi(operand);
+				temp_val1 = atoi(operand.c_str());
 				if (!stack.IsFull())
-					stack.Push(temp_val);
+					stack.Push(temp_val1);
 				else
 					ErrorNeedToTerminate("toomuch", "value in stack");
 			}
@@ -128,7 +131,6 @@ int main() {
 					ErrorNeedToTerminate("invalidhal", "");
 			}
 			else if (operation == "add") {
-				int temp_val1, temp_val2;
 				if (!stack.IsEmpty()) 
 					temp_val1 = stack.Pop();
 				else ErrorNeedToTerminate("invalidhal", "");
@@ -140,7 +142,7 @@ int main() {
 				else ErrorNeedToTerminate("toomuch", "value in stack");
 			}
 			else if (operation == "multiply") {
-				int temp_val1, temp_val2;
+				
 				if (!stack.IsEmpty())
 					temp_val1 = stack.Pop();
 				else ErrorNeedToTerminate("invalid", "");
@@ -152,7 +154,7 @@ int main() {
 				else ErrorNeedToTerminate("toomuch", "value in stack");
 			}
 			else if (operation == "subtract") {
-				int temp_val1, temp_val2;
+				
 				if (!stack.IsEmpty())
 					temp_val1 = stack.Pop();
 				else ErrorNeedToTerminate("invalidhal", "");
@@ -164,7 +166,7 @@ int main() {
 				else ErrorNeedToTerminate("toomuch", "value in stack");
 			}
 			else if (operation == "divide") {
-				int temp_val1, temp_val2;
+			
 				if (!stack.IsEmpty())
 					temp_val1 = stack.Pop();
 				else ErrorNeedToTerminate("invalidhal", "");
@@ -177,12 +179,12 @@ int main() {
 			}
 			else if (operation == "set") {
 				operand = curr_instruction.operand;
-				int temp_val;
+			
 				if (!stack.IsEmpty())
-					temp_val = stack.Pop();
+					temp_val1 = stack.Pop();
 				else ErrorNeedToTerminate("invalidhal", "");
 				if (!symbol_table.IsEmpty() && symbol_table.FindSorted(operand) && symbol_table.IsPSet()) {
-					symbol_table.Write(temp_val);
+					symbol_table.Write(temp_val1);
 				}
 				else ErrorNeedToTerminate("invalidhal", "");
 			}
@@ -198,7 +200,7 @@ int main() {
 				cout << endl;
 			}
 			else if (operation == "compare") {
-				int temp_val1, temp_val2;
+				
 				if (!stack.IsEmpty())
 					temp_val1 = stack.Pop();
 				else ErrorNeedToTerminate("invalidhal", "");
@@ -210,12 +212,12 @@ int main() {
 			else if (operation == "jumpequal") {
 				operand = curr_instruction.operand;
 				if (status == 1)
-					instruction_table.SetP(stoi(operand)-1);//-1 to compensate for the iterate at the end
+					instruction_table.SetP(atoi(operand.c_str())-1);//-1 to compensate for the iterate at the end
 				status = -1;
 			}
 			else if (operation == "jump") {
 				operand = curr_instruction.operand;
-				instruction_table.SetP(stoi(operand) - 1);//-1 to compensate for the iterate at the end
+				instruction_table.SetP(atoi(operand.c_str()) - 1);//-1 to compensate for the iterate at the end
 			}
 			else if (operation == "end") {
 			// dont do anything. leaving it to while condition
@@ -250,7 +252,7 @@ bool isValidVariable(string var) {
 	if (var == "") return false;
 	if (!isalpha(var[0])) return false;
 	for (int i = 1; i < var.length(); i++) {
-		if (!isalpha(var[i]) || !isdigit(var[i]))return false;
+		if (!isalpha(var[i]) && !isdigit(var[i]))return false;
 	}
 	return true;
 }

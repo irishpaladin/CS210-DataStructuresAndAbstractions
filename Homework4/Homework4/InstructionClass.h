@@ -1,7 +1,8 @@
 #ifndef INSTRUCTIONCLASS_H
-#define INSTUCTIONCLASS_H
+#define INSTRUCTIONCLASS_H
 
 #include <iostream>
+
 using namespace std;
 
 const int I_MAX_LENGTH = 100;

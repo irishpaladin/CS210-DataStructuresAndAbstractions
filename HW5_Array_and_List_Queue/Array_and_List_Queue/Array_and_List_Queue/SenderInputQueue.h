@@ -27,7 +27,6 @@ public:
 	void Enqueue(SenderAckMessage x);
 	SenderAckMessage Dequeue();
 	void Clear();
-
 };
 
 #endif

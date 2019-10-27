@@ -123,13 +123,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ArrayQueue.cpp" />
-    <ClCompile Include="LinkedListQueue.cpp" />
+    <ClCompile Include="ReceiverInputQueue.cpp" />
+    <ClCompile Include="ReceiverOutputQueue.cpp" />
+    <ClCompile Include="SenderOutputQueue.cpp" />
+    <ClCompile Include="SenderInputQueue.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ArrayQueue.h" />
-    <ClInclude Include="LinkedListQueue.h" />
+    <ClInclude Include="ReceiverInputQueue.h" />
+    <ClInclude Include="ReceiverOutputQueue.h" />
+    <ClInclude Include="SenderOutputQueue.h" />
+    <ClInclude Include="SenderInputQueue.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

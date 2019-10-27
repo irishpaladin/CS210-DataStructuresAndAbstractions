@@ -1,9 +1,9 @@
-//SenderInputQueue.cpp
+//ReceiverInputQueue.cpp
 
-#include "SenderInputQueue.h"
+#include "ReceiverInputQueue.h"
 #include <iostream>
 
-SenderInputQueue::SenderInputQueue()
+ReceiverInputQueue::ReceiverInputQueue()
 {
 	// this is the constructor
 	// initializes the queue
@@ -13,13 +13,13 @@ SenderInputQueue::SenderInputQueue()
 	length = 0;
 }
 
-int SenderInputQueue::Length() const
+int ReceiverInputQueue::Length() const
 {
 	// returns the number of items in the queue
 	return length;
 }
 
-bool SenderInputQueue::IsEmpty() const
+bool ReceiverInputQueue::IsEmpty() const
 {
 	// checks whether the queue is empty
 	if (length == 0)
@@ -27,13 +27,13 @@ bool SenderInputQueue::IsEmpty() const
 	return false;
 }
 
-bool SenderInputQueue::IsFull() const
+bool ReceiverInputQueue::IsFull() const
 {
 	try
 	{
-		SenderAckMessage* q = new SenderAckMessage;
+		ReceiverDataMessage* q = new ReceiverDataMessage;
 		delete q;
-		if (length == SENDERS_INPUT_QUEUE_SIZE)
+		if (length == RECEIVER_INPUT_QUEUE_SIZE)
 			return true;
 		return false;
 	}
@@ -43,12 +43,12 @@ bool SenderInputQueue::IsFull() const
 	}
 }
 
-void SenderInputQueue::Enqueue(SenderAckMessage x)
+void ReceiverInputQueue::Enqueue(ReceiverDataMessage x)
 {
 	// inserts a new item at the back of the queue
 	// always call IsFull prior to calling Enqueue
 	// sets front and back
-	SenderAckMessage* q = new SenderAckMessage;
+	ReceiverDataMessage* q = new ReceiverDataMessage;
 	q->message_number = x.message_number;
 	q->char_data = x.char_data;
 	q->next = NULL;
@@ -62,13 +62,13 @@ void SenderInputQueue::Enqueue(SenderAckMessage x)
 	return;
 }
 
-SenderAckMessage SenderInputQueue::Dequeue()
+ReceiverDataMessage ReceiverInputQueue::Dequeue()
 {
 	// removes the item from the front of the queue
 	// always call IsEmpty prior to calling Dequeue
 	// sets front and back
-	SenderAckMessage* q = front;
-	SenderAckMessage x; //storage of the data returned
+	ReceiverDataMessage* q = front;
+	ReceiverDataMessage x; //storage of the data returned
 	x.message_number = front->message_number;
 	x.char_data = front->char_data;
 	front = front->next;
@@ -79,16 +79,16 @@ SenderAckMessage SenderInputQueue::Dequeue()
 	return x;
 }
 
-void SenderInputQueue::Clear()
+void ReceiverInputQueue::Clear()
 {
 	// reinitializes the queue
 	// sets front and back
 	while (front != NULL) {
-		SenderAckMessage* q = front;
+		ReceiverDataMessage* q = front;
 		front = front->next;
 		delete q;
 	}
-		
+
 	back = front;
 	length = 0;
 	return;

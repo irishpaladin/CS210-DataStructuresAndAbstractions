@@ -29,6 +29,7 @@ bool SenderInputQueue::IsEmpty() const
 
 bool SenderInputQueue::IsFull() const
 {
+	// checks whether the queue is full
 	try
 	{
 		SenderAckMessage* q = new SenderAckMessage;
@@ -54,10 +55,9 @@ void SenderInputQueue::Enqueue(SenderAckMessage x)
 	q->next = NULL;
 	if (front == NULL)
 		front = q;
-	else {
+	else 
 		back->next = q;
-		back = q;
-	}
+	back = q;
 	length++;
 	return;
 }

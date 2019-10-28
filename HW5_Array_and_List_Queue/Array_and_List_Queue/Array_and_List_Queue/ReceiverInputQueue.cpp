@@ -29,6 +29,7 @@ bool ReceiverInputQueue::IsEmpty() const
 
 bool ReceiverInputQueue::IsFull() const
 {
+	// checks whether the queue is full
 	try
 	{
 		ReceiverDataMessage* q = new ReceiverDataMessage;
@@ -54,10 +55,9 @@ void ReceiverInputQueue::Enqueue(ReceiverDataMessage x)
 	q->next = NULL;
 	if (front == NULL)
 		front = q;
-	else {
+	else 
 		back->next = q;
-		back = q;
-	}
+	back = q;
 	length++;
 	return;
 }

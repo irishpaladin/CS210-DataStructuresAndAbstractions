@@ -1,6 +1,7 @@
 //AsynchronousFTPSimulation.cpp
 
 #include <iostream>
+#include <string>	//for getline()
 #include <fstream>	//for reading and writting a file
 #include <cstdlib>	//for generating random number
 #include <ctime>	//for srand seed
@@ -22,8 +23,14 @@ int GenerateTimeToNextEvent();
 int main() {
 
 	//initializing the files
-	ofstream outputFile("outputFile.txt");
-	ifstream inputFile("inputFile.txt");
+	string filename;
+	cout << "Enter output file: ";
+	getline(cin, filename);
+	ofstream outputFile(filename);
+	cout << "Enter input file: ";
+	getline(cin, filename);
+	ifstream inputFile(filename);
+
 	if (inputFile.good())
 	{
 		//starts Simulation
@@ -31,12 +38,10 @@ int main() {
 		FileTransferSimulation(inputFile, outputFile);
 		inputFile.close();
 		outputFile.close();
-		cout << "main>if>end" << endl;
 	}
 	else
 		//file not found
-		cout << "Invalid File!" << endl;
-	cout << "main end" << endl;
+		cout << "Invalid Input File!" << endl;
 	return 0;
 }
 
@@ -68,8 +73,8 @@ void FileTransferSimulation(ifstream& inputFile, ofstream& outputFile)
 	bool receiverReceiveStatus = NO_RECEIVE;
 	bool receiverSendStatus = NO_SEND;
 
-	int char_index = 0;
-	bool displayGlobalClk = false;
+	int char_index = 0; //counter for the index of char
+	bool displayGlobalClk = false; //for displaying 
 
 	// This loop will continue until the file has been transferred.
 	// If the end of the input file has been reached and all
@@ -77,17 +82,6 @@ void FileTransferSimulation(ifstream& inputFile, ofstream& outputFile)
 	while (inputFile.good() || !(senderInputQueue.IsEmpty() && senderOutputQueue.IsEmpty()
 		&& receiverInputQueue.IsEmpty() && receiverOutputQueue.IsEmpty()))
 	{
-		if (inputFile.good())
-			cout << "goodIF ";
-		if (!senderInputQueue.IsEmpty())
-			cout << "SIQ!empty ";
-		if (!senderOutputQueue.IsEmpty())
-			cout << "SOQ!empty ";
-		if (!receiverInputQueue.IsEmpty())
-			cout << "RIQ!empty ";
-		if (!receiverOutputQueue.IsEmpty())
-			cout << "ROQ!empty ";
-		cout << endl;
 		// The global clock ticks once.
 		globalClock++;
 
@@ -206,16 +200,8 @@ void FileTransferSimulation(ifstream& inputFile, ofstream& outputFile)
 			cout << "Receiver: Received [" << receiverAckMsg.message_number << ", "
 				<< receiverAckMsg.char_data << "] " << endl;
 		}
-
-		//char ch;
-		//inputFile >> noskipws >> ch;
-		 
-		//outputFile << ch;
-		//cout << "char: " << ch << endl;
 		displayGlobalClk = true;
 	}
-	cout << "FileTransferProtocol end" << endl;
-
 }
 
 //generates number 1-100

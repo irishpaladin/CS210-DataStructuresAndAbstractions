@@ -9,8 +9,8 @@ using namespace std;
 
 const int MAX_LENGTH = 10;
 
-struct Occurence;
-struct Occurence {
+struct occurenceLocation;
+struct occurenceLocation {
 	int page;
 	int position;
 };
@@ -25,20 +25,20 @@ public:
 	bool IsPSet()const;
 	int GetP()const;
 	void SetP(int q);
-	Occurence Read()const;
-	void Write(Occurence x);
+	occurenceLocation Read()const;
+	void Write(occurenceLocation x);
 	int Length()const;
 	bool IsEmpty()const;
 	bool IsFull()const;
-	void InsertUnsorted(Occurence x);
-	bool FindUnsorted(Occurence x);
+	void InsertUnsorted(occurenceLocation x);
+	bool FindUnsorted(occurenceLocation x);
 	void DeleteUnsorted();
 	void Clear();
 
 private:
 	int p;
 	int length;
-	Occurence a[MAX_LENGTH];
+	occurenceLocation occurence[MAX_LENGTH];
 };
 
 #endif

@@ -60,20 +60,20 @@ void occurenceType::SetP(int q) {
 	p = q;
 	return;
 }
-Occurence occurenceType::Read()const {
+occurenceLocation occurenceType::Read()const {
 	// returns the value of the element pointed to by p
 	// p must be set prior to calling Read
 	// always call IsPSet prior to calling Read
-	return a[p];
+	return occurence[p];
 }
 
-void occurenceType::Write(Occurence x) {
+void occurenceType::Write(occurenceLocation x) {
 	// writes a new value into the element pointed to by p
 	// p must be set prior to calling Write
 	// always call IsPSet prior to calling Write
 	// could cause a problem in a sorted list if the key is changed
-	a[p].page = x.page;
-	a[p].position = x.position;
+	occurence[p].page = x.page;
+	occurence[p].position = x.position;
 	return;
 }
 
@@ -96,23 +96,23 @@ bool occurenceType::IsFull()const {
 	else return false;
 }
 
-void occurenceType::InsertUnsorted(Occurence x) {
+void occurenceType::InsertUnsorted(occurenceLocation x) {
 	// inserts a new element at the end of the list
 	// always call IsFull prior to calling InsertUnsorted
 	// sets p
 	p = length;
-	a[p].page = x.page;
-	a[p].position = x.position;
+	occurence[p].page = x.page;
+	occurence[p].position = x.position;
 	length++;
 	return;
 }
 
-bool occurenceType::FindUnsorted(Occurence x) {
+bool occurenceType::FindUnsorted(occurenceLocation x) {
 	// always call IsEmpty prior to calling FindUnsorted
 	// sets p
 	p = 0;
 	while (p < length) {
-		if (x.page == a[p].page && x.position == a[p].position) {
+		if (x.page == occurence[p].page && x.position == occurence[p].position) {
 			return true;
 		}
 		p++;
@@ -125,7 +125,7 @@ void occurenceType::DeleteUnsorted() {
 	// p must be set prior to calling DeleteUnsorted
 	// always call IsPSet prior to calling DeleteUnsorted
 	// moves the last element into the element pointed to by p
-	a[p] = a[length - 1];
+	occurence[p] = a[length - 1];
 	length--;
 	return;
 }

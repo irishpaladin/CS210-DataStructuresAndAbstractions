@@ -41,10 +41,10 @@ private:
 	//methods
 	//its not changing the root
 	void insertHelper(indexEntry &new_entry, indexNode* &q);//kind of complicated
-	void LL(indexNode* q);
-	void RR(indexNode* q);
-	void LR(indexNode* q);
-	void RL(indexNode* q);
+	void LL(indexNode*& q);
+	void RR(indexNode*& q);
+	void LR(indexNode*& q);
+	void RL(indexNode*& q);
 	int Height(indexNode* q);
 };
 #endif

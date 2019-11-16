@@ -139,40 +139,35 @@ void indexType::resetP()
 	p = root;
 }
 
-void indexType::LL(indexNode* q)
+void indexType::LL(indexNode*& q)
 {
 	// assumes p is passed-by-reference
 	cout << " LL > " +q->entry.word << endl << endl;
-	if (q == root)
-		root = q->left;
 	indexNode* r = q->left;
 	q->left = r->right;
 	r->right = q;
 	q->height = max(Height(q->left), Height(q->right)) + 1;
 	r->height = max(Height(r->left), Height(r->right)) + 1;
 	q = r;
-	cout << "After RR: " + q->left->entry.word + " <- " + q->entry.word + " -> " + q->right->entry.word;
+
 	return;
 }
 
-void indexType::RR(indexNode* q)
+void indexType::RR(indexNode*& q)
 {
 	// assumes q is passed-by-reference
 	cout << " RR > " + q->entry.word << endl;
-	if (q == root)
-		root = q->right;
 	indexNode* r = q->right;
 	q->right = r->left;
 	r->left = q;
 	q->height = max(Height(q->left), Height(q->right)) + 1;
 	r->height = max(Height(r->left), Height(r->right)) + 1;
 	q = r;
-
-	cout << "After RR: " + q->left->entry.word + " <- " + q->entry.word + " -> " + q->right->entry.word << endl << endl;
+	
 	return;
 }
 
-void indexType::LR(indexNode* q)
+void indexType::LR(indexNode*& q)
 {
 	cout << "LR > ";
 		// assumes q is passed-by-reference
@@ -181,7 +176,7 @@ void indexType::LR(indexNode* q)
 	return;
 }
 
-void indexType::RL(indexNode* q)
+void indexType::RL(indexNode*& q)
 {
 	// assumes q is passed-by-reference
 	cout << "RL > ";

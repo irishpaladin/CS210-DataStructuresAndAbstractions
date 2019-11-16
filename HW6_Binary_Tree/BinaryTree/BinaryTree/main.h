@@ -2,7 +2,13 @@
 
 #ifndef MAIN_H
 #define MAIN_H
-class main
+#include"indexType.h"
+class Main
 {
+public:
+	void displayTree(indexNode* q)const;
+	void displayHelper(indexNode* q, int level)const;
+private:
+	
 };
 #endif

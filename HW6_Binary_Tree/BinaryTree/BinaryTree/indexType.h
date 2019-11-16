@@ -3,14 +3,14 @@
 #ifndef INDEXTYPE_H
 #define INDEXTYPE_H
 #include <iostream>
-#include "occurenceType.h"
+#include "occurrenceType.h"
 
 using namespace std;
 
 struct indexEntry;
 struct indexEntry {
 	string word;
-	occurenceType occurences;
+	occurrenceType occurrences;
 };
 
 //AVL Node structure
@@ -27,16 +27,25 @@ class indexType
 public:
 	indexType();
 	bool IsPSet()const;
-	indexEntry Read()const; //i might need height
-	//void Write(indexEntry);	no need for write we wont change the data in the file
+	indexNode Read()const;
 	bool IsEmpty()const;
 	bool IsFull()const;
-	//void Find() dunno what to do
-
+	void Find(string word, indexNode* q);// dunno what to do
+	void Insert(indexEntry& new_entry);//kind of complicated
+	indexNode* getP() const; //method for traversing the tree
+	void resetP();	//method needed for traversing the tree
 
 private:
 	indexNode* root;
 	indexNode* p;
+	//methods
+	//its not changing the root
+	void insertHelper(indexEntry &new_entry, indexNode* &q);//kind of complicated
+	void LL(indexNode* q);
+	void RR(indexNode* q);
+	void LR(indexNode* q);
+	void RL(indexNode* q);
+	int Height(indexNode* q);
 };
 #endif
 

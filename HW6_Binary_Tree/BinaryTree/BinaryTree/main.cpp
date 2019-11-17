@@ -3,8 +3,8 @@
 #include<iostream>
 #include"main.h"
 #include<fstream>
-#include<string.h>
 #include<string>
+#include<cstdio>	//printf
 using namespace std;
 
 int main() {
@@ -61,11 +61,15 @@ int main() {
 			else {
 				main.insertNewNode(word, page, position);
 			}
-			main.displayTree();
+			
+			
 		}
-		cout << endl;
 		file.close();	
-	}
+	}//end of forloop
+
+	
+	//main.displayTree();
+	main.displayIndexEntries();
 	
 
 	return 0;
@@ -85,8 +89,7 @@ void Main::displayTree()
 	else
 	{
 		cout << endl;
-		;
-		displayHelper(index_type.getP(), 1);
+		displayTreeHelper(index_type.getP(), 1);
 		cout << endl;
 	}
 }
@@ -104,7 +107,7 @@ void Main::displayTreeHelper(indexNode* p, int level) const
 
 	if (p != 0)
 	{
-		displayHelper(p->right, level + 1);         // Output right subtree
+		displayTreeHelper(p->right, level + 1);         // Output right subtree
 		for (j = 0; j < level; j++)    // Tab over to level
 			cout << "\t\t";
 		cout << " " << p->entry.word;   // Output key
@@ -116,7 +119,55 @@ void Main::displayTreeHelper(indexNode* p, int level) const
 		else if (p->left != 0)
 			cout << "\\";
 		cout << endl;
-		displayHelper(p->left, level + 1);          // Output left subtree
+		displayTreeHelper(p->left, level + 1);          // Output left subtree
+	}
+}
+
+void Main::displayIndexEntries()
+
+// Outputs the keys in a binary search tree. The tree is output
+// rotated counterclockwise 90 degrees from its conventional
+// orientation using a "reverse" inorder traversal. This operation is
+// intended for testing and debugging purposes only.
+
+{
+	index_type.resetP();
+	if (index_type.getP() == 0)
+		cout << "Empty tree" << endl;
+	else
+	{
+		cout << endl;
+		displayIndexEntriesHelper(index_type.getP());
+		cout << endl;
+	}
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void Main::displayIndexEntriesHelper(indexNode* p) const
+// Inorder traversal implementation
+// Recursive helper for displayIndexEntries. 
+// Outputs the subtree whose root node is pointed to by p. 
+{
+	if (p != 0)
+	{
+		displayIndexEntriesHelper(p->left);         // Output right subtree
+		
+		//display occurences
+		printf("%-16s", p->entry.word.c_str());
+		//cout << p->entry.word << "\t\t";   // Output word
+		p->entry.occurrences.ResetP();
+		p->entry.occurrences.Iterate();
+		while (p->entry.occurrences.IsPSet()) {
+			string occurrence = "(";
+			occurrence += to_string(p->entry.occurrences.Read().page) + ",";
+			occurrence += to_string(p->entry.occurrences.Read().position)+")";
+			printf("%-7s", occurrence.c_str());
+			p->entry.occurrences.Iterate();
+		}
+		cout << endl;
+
+		displayIndexEntriesHelper(p->right);          // Output left subtree
 	}
 }
 

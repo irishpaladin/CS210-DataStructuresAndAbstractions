@@ -66,7 +66,6 @@ void indexType::Insert(indexEntry& x)
 	if (root == NULL) 
 	{
 		//if tree is empty
-		cout << "Insert root " << x.word << endl;
 		indexNode* q = new indexNode;
 		q->entry = x;
 		q->height = 0;
@@ -76,7 +75,6 @@ void indexType::Insert(indexEntry& x)
 		root = q;
 	}
 	else {
-		cout << "Insert helper " << x.word << endl;
 		insertHelper(x, root);
 	}
 }
@@ -93,11 +91,9 @@ void indexType::insertHelper(indexEntry &x, indexNode* &q)
 		q->height = 0;
 		q->left = NULL;
 		q->right = NULL;
-		cout << "Inserted " << x.word << endl << endl;
 		p = q;
 	}
 	else if (x.word < q->entry.word) {
-		cout << "left > ";
 		insertHelper(x, q->left);
 		if (p != NULL) {
 			if (Height(q->left) - Height(q->right) == 2) {
@@ -109,7 +105,6 @@ void indexType::insertHelper(indexEntry &x, indexNode* &q)
 		}
 	}
 	else if (x.word > q->entry.word) {
-		cout << "right > ";
 		insertHelper(x, q->right);
 		if (p != NULL) {
 			if (Height(q->right) - Height(q->left) == 2) {
@@ -142,7 +137,6 @@ void indexType::resetP()
 void indexType::LL(indexNode*& q)
 {
 	// assumes p is passed-by-reference
-	cout << " LL > " +q->entry.word << endl << endl;
 	indexNode* r = q->left;
 	q->left = r->right;
 	r->right = q;
@@ -156,7 +150,6 @@ void indexType::LL(indexNode*& q)
 void indexType::RR(indexNode*& q)
 {
 	// assumes q is passed-by-reference
-	cout << " RR > " + q->entry.word << endl;
 	indexNode* r = q->right;
 	q->right = r->left;
 	r->left = q;
@@ -169,7 +162,6 @@ void indexType::RR(indexNode*& q)
 
 void indexType::LR(indexNode*& q)
 {
-	cout << "LR > ";
 		// assumes q is passed-by-reference
 	RR(q->left);
 	LL(q);
@@ -179,7 +171,6 @@ void indexType::LR(indexNode*& q)
 void indexType::RL(indexNode*& q)
 {
 	// assumes q is passed-by-reference
-	cout << "RL > ";
 	LL(q->right);
 	RR(q);
 	return;

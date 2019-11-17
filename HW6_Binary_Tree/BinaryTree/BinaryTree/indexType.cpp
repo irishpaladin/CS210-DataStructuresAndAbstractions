@@ -41,6 +41,7 @@ bool indexType::IsFull() const
 	{
 		indexNode* q = new indexNode;
 		delete q;
+		return false;
 	}
 	catch (std::bad_alloc e)
 	{

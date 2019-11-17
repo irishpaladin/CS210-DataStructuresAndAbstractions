@@ -7,7 +7,7 @@
 using namespace std;
 
 
-const int MAX_LENGTH = 10;
+const int MAX_LENGTH = 65;
 
 struct occurrenceLocation;
 struct occurrenceLocation {

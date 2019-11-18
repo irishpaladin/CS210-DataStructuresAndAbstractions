@@ -126,12 +126,14 @@ void indexType::insertHelper(indexEntry &x, indexNode* &q)
 
 indexNode* indexType::getP() const
 {
+	//added to be able to access root
 	return p;
 }
 
 void indexType::resetP()
 {
 	//sets P to root
+	//added to be able to access the root
 	p = root;
 }
 

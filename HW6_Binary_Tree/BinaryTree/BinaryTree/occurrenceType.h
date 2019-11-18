@@ -32,7 +32,6 @@ public:
 	bool IsFull()const;
 	void InsertUnsorted(occurrenceLocation x);
 	bool FindUnsorted(occurrenceLocation x);
-	//void DeleteUnsorted(); dont need to delete data
 	void Clear();
 
 private:

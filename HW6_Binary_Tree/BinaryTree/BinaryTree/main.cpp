@@ -9,12 +9,13 @@
 using namespace std;
 
 int main() {
+	int page_number = 20;
 	Main main;
 
 	//reading file
 	string filename = "C:\\Users\\Irish Paladin\\Google Drive\\2Year1Term\\CS210\\Lecture\\Homework6\\files\\";
 	//and till page 14
-	for (int page = 1; page <= 20; page++) {
+	for (int page = 1; page <= page_number; page++) {
 		ifstream file(filename + to_string(page));
 		if (file.good()) {
 			string word;	//temporary variable of a word read
@@ -26,6 +27,7 @@ int main() {
 				//change the characters of the word to a lower characters
 				for (int i = 0, len = word.size(); i < len; i++)
 				{
+					if (word[i] == '-')continue;
 					if (ispunct(word[i]))
 					{
 						word.erase(i--, 1);	//removes the punctuation
@@ -75,6 +77,8 @@ int main() {
 			case 'S':case's':
 				main.searchOption();
 				break;
+			case 'Q':case'q':
+				break;
 			default:
 				cout << " !! You entered an invalid choice !! " << endl;
 				break;
@@ -95,10 +99,9 @@ Main::Main()
 
 void Main::displayTree()
 
-// Outputs the keys in a binary search tree. The tree is output
+// Outputs the index without the occurrences in AVL tree format. The tree is output
 // rotated counterclockwise 90 degrees from its conventional
-// orientation using a "reverse" inorder traversal. This operation is
-// intended for testing and debugging purposes only.
+// orientation using a "reverse" inorder traversal. 
 
 {
 	index_type.resetP();
@@ -112,11 +115,9 @@ void Main::displayTree()
 	}
 }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 void Main::displayTreeHelper(indexNode* p, int level) const
 
-	// Recursive helper for showStructure. 
+	// Recursive helper for displayTree. 
 	// Outputs the subtree whose root node is pointed to by p. 
 	// Parameter level is the level of this node within the tree.
 {
@@ -143,10 +144,8 @@ void Main::displayTreeHelper(indexNode* p, int level) const
 
 void Main::displayIndexEntries()
 
-// Outputs the keys in a binary search tree. The tree is output
-// rotated counterclockwise 90 degrees from its conventional
-// orientation using a "reverse" inorder traversal. This operation is
-// intended for testing and debugging purposes only.
+// Outputs the index, with the occurrences, in list format
+// orientation using an inorder traversal.
 
 {
 	index_type.resetP();
@@ -160,18 +159,16 @@ void Main::displayIndexEntries()
 	}
 }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 void Main::displayIndexEntriesHelper(indexNode* p) const
 // Inorder traversal implementation
 // Recursive helper for displayIndexEntries. 
-// Outputs the subtree whose root node is pointed to by p. 
+// Outputs the index in the subtree whose root node is pointed to by p. 
 {
 	if (p != 0)
 	{
 		displayIndexEntriesHelper(p->left);         // Output right subtree
 		//display occurences
 		printf("%-16s", p->entry.word.c_str());
-		//cout << p->entry.word << "\t\t";   // Output word
 		p->entry.occurrences.ResetP();
 		p->entry.occurrences.Iterate();
 		while (p->entry.occurrences.IsPSet()) {
@@ -198,7 +195,8 @@ bool Main::hasOccurence(string word)
 
 void Main::insertOccurence(int page, int position)
 {
-	//inserts occurence
+	// inserts occurence
+	// always call IsFull prior to calling InsertOccurence
 	if (!index_type.getP()->entry.occurrences.IsFull())
 		index_type.getP()->entry.occurrences.InsertUnsorted({ page,position });
 	else {
@@ -208,7 +206,7 @@ void Main::insertOccurence(int page, int position)
 
 void Main::insertNewNode(string word, int page, int position)
 {
-	
+	// inserts new node to the tree
 	if (!index_type.IsFull()) {
 		indexEntry entry;
 		entry.word = word;
@@ -226,7 +224,7 @@ void Main::searchOption()
 {
 	//look for occurence of a word or phrase
 	//sets p
-	string search; //temporary variable for
+	string search; // variable for user input
 	do {
 		cout << "\n(b for Back) ";
 		cout << "Search: ";
@@ -304,7 +302,11 @@ void Main::searchOption()
 string Main::searchHelper(string original, int word_count, int start, int page, int position)
 {
 	// recursive function of searchOption
-	//sets p
+	// parameter original is the user entered phrase
+	// parameter word_cound is the number of remaining word to iterate
+	// parameter start: original[start] is the 1st char of the word that is looking for
+	// parameter page& position is th epage and position the word supposed to be in
+	// sets p
 	
 	if (word_count == 0) {
 		//end of string

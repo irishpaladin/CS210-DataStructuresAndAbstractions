@@ -43,9 +43,7 @@ private:
 	void displayTreeHelper(indexNode* q, int level)const;
 	void displayIndexEntriesHelper(indexNode* q)const;
 	string getNextWord(string str, int start);
-	bool searchHelper(string original, int word_count, int start, int page, int position);
-	string searchHelper2(string original, int word_count, int start, int page, int position);
-	string searchHelper3(string original, int word_count, int start, int page, int position);
+	string searchHelper(string original, int word_count, int start, int page, int position);
 	void displayResultNotFound(string str);
 	int occurrenceCount(string word);
 	//linkedlistPrivate variables/methods

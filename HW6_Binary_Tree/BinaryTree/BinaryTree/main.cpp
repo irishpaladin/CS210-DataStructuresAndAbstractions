@@ -224,24 +224,28 @@ void Main::insertNewNode(string word, int page, int position)
 
 void Main::searchOption()
 {
+	//look for occurence of a word or phrase
+	//sets p
 	string search; //temporary variable for
 	do {
 		cout << "\n(b for Back) ";
 		cout << "Search: ";
 		getline(cin, search);
-		if (search != "") {//disregards empty inputs
-			istringstream str_data(search); //I used this to avoid one or more space between words
-			string word; //temp variable of a word in a string
-			//counts the number of words in the string
-			//remove extra spaces between words
-			string new_search="";//string which has no extra spaces between words
-			int word_count = 0; //temp variable
+		if (search == "b")return;	// back
+		if (search != "") {		// disregards empty inputs
+			istringstream str_data(search); // I used this to avoid one or more space between words
+			string word; // temp variable of a word in a string
+			string new_search = "";//string which has no extra spaces between words
+			int word_count = 0; // counter for number of word in the phrase
+
+			// counts the number of words in the string
+			// remove extra spaces between words
 			while (str_data >> word) {
 				word_count++;
 				new_search += word + " ";
 			}
 
-			//search for the matches
+			// search for the matches
 			if (word_count == 1) {
 				//search for 1 word
 				if (hasOccurence(getNextWord(new_search, 0))) {
@@ -260,6 +264,7 @@ void Main::searchOption()
 				}
 			}
 			else {
+				//search for phrase
 				string word = getNextWord(new_search, 0);
 				//iterate through all occurences of the first word
 				if (hasOccurence(word)) {
@@ -270,15 +275,7 @@ void Main::searchOption()
 					while (index_type.getP()->entry.occurrences.IsPSet()) {
 						int page = index_type.getP()->entry.occurrences.Read().page;
 						int position = index_type.getP()->entry.occurrences.Read().position;
-						//searchhelper
-						/*bool result = searchHelper(new_search, word_count - 1, word.length() + 1, page, position+1);
-						if (result) {
-						cout <<endl<< word << "[" << word_count << "] - ";
-							cout << "(" << page << "," << position << ")\t";
-							found = true;
-						}*/
-						//searchhelper2
-						string result = searchHelper3(new_search, word_count - 1, word.length() + 1, page, position + 1);
+						string result = searchHelper(new_search, word_count - 1, word.length() + 1, page, position + 1);
 						if (result!="  ") {
 							if (!displayed) {
 								cout << endl << search << "\t";
@@ -290,9 +287,10 @@ void Main::searchOption()
 						}
 						hasOccurence(word);//point the p to the 1st word in search
 						index_type.getP()->entry.occurrences.Iterate();
-					}
+					}//endl of while loop
 					//found occurence of the word but not the phrase 
-					if(!found)displayResultNotFound(search);		
+					if (!found)displayResultNotFound(search);
+					else cout << endl;
 				}
 				else {
 					displayResultNotFound(search);
@@ -303,122 +301,13 @@ void Main::searchOption()
 	} while (search != "b");
 }
 
-bool Main::searchHelper(string original, int word_count, int start, int page, int position)
+string Main::searchHelper(string original, int word_count, int start, int page, int position)
 {
+	// recursive function of searchOption
+	//sets p
 	
-	/*for (int i = 0; i < new_search.length() - 1; i++) {
-		cout << getNextWord(new_search, i) << " ";
-
-		i += getNextWord(new_search, i).length();
-	}*/
-	
-	
-	//end of search
-	/*if (word == " ") {
-		cout << "end search word = null " << endl;
-		return true;
-	}
-	else if (word.empty()) {
-		return true;
-	}*/
 	if (word_count == 0) {
-		return true;
-	}
-	else {
-		string word = getNextWord(original, start);
-		if (hasOccurence(word)) {//set p
-			index_type.getP()->entry.occurrences.ResetP();
-			index_type.getP()->entry.occurrences.Iterate();
-			while (index_type.getP()->entry.occurrences.IsPSet()) {
-				int o_page = index_type.getP()->entry.occurrences.Read().page;
-				int o_position = index_type.getP()->entry.occurrences.Read().position;
-				//searchhelper
-				if (o_page > page) {
-					return false;
-				}
-				else if (o_page == page && o_position == position) {
-					//return recursive call
-					bool success = searchHelper(original, word_count - 1, start + word.length() + 1, page, position++);
-					if (success) {
-						cout << "(" << o_page << "," << o_position << ")\t";
-					}
-					return success;
-				}
-				else {
-					hasOccurence(word);
-					index_type.getP()->entry.occurrences.Iterate();
-				}
-				//cout << word << "[" << word_count << "] - ";
-				//cout << "(" << o_page << "," << o_position << ")\t";
-				//if (o_page == page && o_position == position) {
-				//	//return recursive call
-				//	if(searchHelper(original, word_count - 1, start + word.length() + 1, page, position++));	
-				//		cout << "here works";
-				//	cout << "still";
-				//}
-				//hasOccurence(word);
-				//index_type.getP()->entry.occurrences.Iterate();
-			}
-			
-			// found word but not occurrence
-			return false;
-		}
-		else {
-			// word not found
-			return false;
-		}
-	}
-}
-
-string Main::searchHelper2(string original, int word_count, int start, int page, int position)
-{
-	//phrase found
-	if (word_count == 0) {
-		return ")";
-	}
-	else {
-		string word = getNextWord(original, start);
-		if (hasOccurence(word)) {//set p
-			index_type.getP()->entry.occurrences.ResetP();
-			index_type.getP()->entry.occurrences.Iterate();
-			while (index_type.getP()->entry.occurrences.IsPSet()) {
-				int o_page = index_type.getP()->entry.occurrences.Read().page;
-				int o_position = index_type.getP()->entry.occurrences.Read().position;
-				//searchhelper
-				if (o_page > page) {
-					//occurence not found
-					return "  ";
-				}
-				else if (o_page == page && o_position == position) {
-					//return recursive call
-					string returned = searchHelper2(original, word_count - 1, start + word.length() + 1, page, position++);
-					//not found
-					if (returned =="  ") {
-						return "  ";
-					}
-					else
-						return "(" + to_string(o_page) + "," + to_string(o_position) + ")" + returned;
-				}
-				else {
-					hasOccurence(word);
-					index_type.getP()->entry.occurrences.Iterate();
-				}
-			}
-
-			// found word but not occurrence
-			return "  ";
-		}
-		else {
-			// word not found
-			return "  ";
-		}
-	}
-}
-
-string Main::searchHelper3(string original, int word_count, int start, int page, int position)
-{
-	//phrase found
-	if (word_count == 0) {
+		//end of string
 		return ")";
 	}
 	else {
@@ -437,7 +326,7 @@ string Main::searchHelper3(string original, int word_count, int start, int page,
 				}
 				else if (o_page == page && o_position == position) {
 					//return recursive call
-					string returned = searchHelper3(original, word_count - 1, start + word.length() + 1, page, position+1);
+					string returned = searchHelper(original, word_count - 1, start + word.length() + 1, page, position+1);
 					//not found
 					if (returned == "  ") {
 						return "  ";
@@ -461,6 +350,7 @@ string Main::searchHelper3(string original, int word_count, int start, int page,
 }
 
 string Main::getNextWord(string str, int start) {
+	//returns string word from str[start] till single space
 	if (start == str.length() - 1)
 		return " ";
 	string ret_str = "";

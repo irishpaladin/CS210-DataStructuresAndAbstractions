@@ -9,6 +9,10 @@
 
 using namespace std;
 
+const int MODE_DATAONLY = 1;
+const int MODE_DATAINFO = 2;
+const int MODE_FINDDATA = 3;
+
 class Main {
 private:
 	BTree tree;
@@ -17,8 +21,10 @@ public:
 	bool isValid;
 	Main(string file);
 	void insertData();
-	void display();
-	void display(BTreeNode* q);
+	void display(int mode);
+	void displayDataOnly(BTreeNode* q);
+	void displayDataInfo(BTreeNode* q);
+	void displayFindData();
 	void closeFile();
 
 };

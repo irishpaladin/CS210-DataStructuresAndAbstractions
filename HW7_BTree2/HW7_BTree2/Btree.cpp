@@ -173,7 +173,7 @@ void BTree::Insert(int value, int offset, BTreeNode*& q)
 		}
 	else if (q->leaf == true) {//if leaf and not full
 		int j = q->n - 1;
-		while (j >= 0 && value < q->page[j].value) {
+		while (j >= 0 && offset < q->page[j].offset) {
 			q->page[j + 1].value = q->page[j].value;
 			q->page[j + 1].offset = q->page[j].offset;
 			j--;
@@ -188,7 +188,7 @@ void BTree::Insert(int value, int offset, BTreeNode*& q)
 	}
 	else {
 		int j = q->n - 1;
-		while (j > 0 && value < q->page[j].value) {
+		while (j > 0 && offset < q->page[j].offset) {
 			j--;
 		}
 
@@ -262,9 +262,9 @@ bool BTree::SplitRoot()
 	root->page[1].next = q2;
 
 	//debugging purpose
-	cout << endl << "rootsplit: ";
+	/*cout << endl << "rootsplit: ";
 	display();
-	cout << endl;
+	cout << endl;*/
 	return true;
 }
 
@@ -306,48 +306,48 @@ bool BTree::SplitChild(BTreeNode* q1, int k)
 	q1->n++;
 
 	//debugging purpose
-	cout << "splitChild: ";
+	/*cout << "splitChild: ";
 	display();
-	cout << endl;
+	cout << endl;*/
 
 	return true;
 }
 
-
-void BTree::display()
-{
-	if (IsEmpty())
-		cout << "Tree is Empty" << endl;
-	else {
-		display(root);
-	}
-}
-
-void BTree::display(BTreeNode* q)
-{
-	if (q != nullptr) {
-		for (int i = 0; i < q->n; i++) {
-			if (q->leaf) {
-				cout << "(" << q->page[i].value << ", " << q->page[i].offset << ")";
-				if (i == q->n - 1)
-					cout << " | ";
-			}
-			else {
-				display(q->page[i].next);
-			}
-		}
-	}
-	else {
-		cout << "NullHere";
-	}
-}
-
-void BTree::displayLeaf(BTreeNode* q)
-{
-	for (int i = 0; i < q->n; i++) {
-		cout << "(" << q->page[i].value << "," << q->page[i].offset << ") ";
-		if (i == q->n - 1) {
-			cout << " | ";
-		}
-	}
-}
+//
+//void BTree::display()
+//{
+//	if (IsEmpty())
+//		cout << "Tree is Empty" << endl;
+//	else {
+//		display(root);
+//	}
+//}
+//
+//void BTree::display(BTreeNode* q)
+//{
+//	if (q != nullptr) {
+//		for (int i = 0; i < q->n; i++) {
+//			if (q->leaf) {
+//				cout << "(" << q->page[i].value << ", " << q->page[i].offset << ")";
+//				if (i == q->n - 1)
+//					cout << " | ";
+//			}
+//			else {
+//				display(q->page[i].next);
+//			}
+//		}
+//	}
+//	else {
+//		cout << "NullHere";
+//	}
+//}
+//
+//void BTree::displayLeaf(BTreeNode* q)
+//{
+//	for (int i = 0; i < q->n; i++) {
+//		cout << "(" << q->page[i].value << "," << q->page[i].offset << ") ";
+//		if (i == q->n - 1) {
+//			cout << " | ";
+//		}
+//	}
+//}

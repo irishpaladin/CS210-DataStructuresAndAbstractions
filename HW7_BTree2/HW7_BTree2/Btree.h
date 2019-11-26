@@ -1,7 +1,7 @@
 #ifndef BTREE_H
 #define BTREE_H
 
-const int PAGE_SIZE = 5; //that's m
+const int PAGE_SIZE = 16; //that's m
 struct BTreeNode;
 struct Keys;
 
@@ -35,9 +35,9 @@ public:
 	void InsertRoot(int value, int offset);//
 	void Insert(int value, int offset);//might need offset
 
-	void display();
-	void display(BTreeNode* q);
-	void displayLeaf(BTreeNode* q);
+	//void display();
+	//void display(BTreeNode* q);
+	//void displayLeaf(BTreeNode* q);
 
 private:
 	BTreeNode* root;

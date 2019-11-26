@@ -1,7 +1,7 @@
 #ifndef BTREE_H
 #define BTREE_H
 
-const int PAGE_SIZE = 16; //that's m
+const int PAGE_SIZE = 16; //m value
 struct BTreeNode;
 struct Keys;
 
@@ -13,7 +13,7 @@ struct Keys {
 struct BTreeNode {
 	bool root;
 	bool leaf;
-	int n; //how many key
+	int n;
 	Keys page[PAGE_SIZE];
 };
 class BTree
@@ -23,21 +23,14 @@ public:
 	bool IsPSet()const;
 	bool IsISet()const;
 	void ResetP();
-	Keys Read()const;//might need the offset as well
-	BTreeNode* GetP()const;//need for accessing the BTreeNode vartiables
-	void SetP(BTreeNode* q);
-	void SetI(int i);
-	void Write(Keys x);//might need to set offset as well
+	Keys Read()const;
+	BTreeNode* GetP()const;
+	void Write(Keys x);
 	bool IsEmpty()const;
 	bool IsFull()const;
-
-	void Find(int value);//
-	void InsertRoot(int value, int offset);//
-	void Insert(int value, int offset);//might need offset
-
-	//void display();
-	//void display(BTreeNode* q);
-	//void displayLeaf(BTreeNode* q);
+	void Find(int value);
+	void InsertRoot(int value, int offset);
+	void Insert(int value, int offset);
 
 private:
 	BTreeNode* root;
@@ -45,9 +38,9 @@ private:
 	int i;
 	//private methods
 	void Find(int x, BTreeNode* q); //recursive method for find
-	void Insert(int value, int offset, BTreeNode*& q); //might need offset as well
-	bool SplitRoot();
-	bool SplitChild(BTreeNode* q1, int k);
+	void Insert(int value, int offset, BTreeNode*& q); //recursive method for insert
+	bool SplitRoot(); //called by insert
+	bool SplitChild(BTreeNode* q1, int k); //called by insert
 };
 #endif
 

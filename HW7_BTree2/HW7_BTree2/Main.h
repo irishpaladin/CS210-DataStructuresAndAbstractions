@@ -9,6 +9,7 @@
 
 using namespace std;
 
+//modes for displaying
 const int MODE_DATAONLY = 1;
 const int MODE_DATAINFO = 2;
 const int MODE_FINDDATA = 3;
@@ -18,7 +19,7 @@ private:
 	BTree tree;
 	std::fstream IOFile;
 public:
-	bool isValid;
+	bool isValid; //true of the file is created successfully
 	Main(string file);
 	void insertData();
 	void display(int mode);

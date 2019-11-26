@@ -3,12 +3,14 @@
 
 int main() {
 	string file = "C:\\Users\\Irish Paladin\\Google Drive\\2Year1Term\\CS210\\Lecture\\Homework7\\censusdata.txt";
+	//instantiating class and reads in the data
 	Main main(file);
 	if (!main.isValid) {
 		cout << "File Not Found" << endl;
 		return EXIT_FAILURE;
 	}
 	else {
+		//displays the result
 		cout<<"Key and Offset" << endl;
 		main.display(MODE_DATAONLY);
 		cout << endl;
@@ -20,12 +22,13 @@ int main() {
 		cout << "(q->quit)Find Data" << endl;
 		main.display(MODE_FINDDATA);
 	}
-	main.closeFile();
+	main.closeFile(); //closes file
 	return 0;
 }
 
 Main::Main(string file)
 {
+	//constructor
 	IOFile.open(file, fstream::ate | fstream::in | fstream::out);
 	if (!IOFile)
 		isValid = false;
@@ -38,38 +41,29 @@ Main::Main(string file)
 
 void Main::insertData()
 {
-	size_t characterCtr = 0;
-	string line;
-	int key;
+	// variable counters
+	size_t characterCtr = 0; // reads offset
+	string line; // stores the whole line
+	int key; // stores the key
 
 	IOFile.seekg(0, fstream::beg); //reposition the inputstream marker to 0 distance from beg //marker that reads the file
 
-	//get the first line in the file
-	getline(IOFile, line);
-	istringstream iss1(line);
-	iss1 >> key;
-	tree.InsertRoot(key, 0); //insert first value
-	characterCtr = characterCtr + line.length() + 1;
-	/*cout << endl;
-	display();
-	cout << endl;*/
-
-
+	// reads and stores data
 	while (getline(IOFile, line)) {
 		istringstream iss(line);
 		iss >> key;
-		
-		tree.Insert(key, characterCtr);
+		if(tree.IsEmpty())
+			tree.InsertRoot(key, 0); //insert first value
+		else
+			tree.Insert(key, characterCtr);
 		characterCtr = characterCtr + line.length() + 1;
-		/*cout << endl;
-		display();
-		cout << endl;*/
 	}
 	
 }
 
 void Main::display(int mode)
 {
+	//method that calls recurrsive functions of different displays
 	if (tree.IsEmpty())
 		cout << "Tree is Empty" << endl;
 	else {
@@ -93,6 +87,7 @@ void Main::display(int mode)
 
 void Main::displayDataOnly(BTreeNode* q)
 {
+	// displays the key and offset only
 	for (int i = 0; i < q->n; i++) {
 		if (q->leaf) {
 			cout << "(" << q->page[i].value << ", " << q->page[i].offset << ") ";
@@ -107,6 +102,7 @@ void Main::displayDataOnly(BTreeNode* q)
 
 void Main::displayDataInfo(BTreeNode* q)
 {
+	// displays the key , offset and the line corresponding the offset
 	for (int i = 0; i < q->n; i++) {
 		if (q->leaf) {
 			string line;
@@ -124,39 +120,36 @@ void Main::displayDataInfo(BTreeNode* q)
 
 void Main::displayFindData()
 {
-	if (IOFile.good())
-		cout << "good";
-	else
-		cout << "bad";
-	int offset;
-	string line;
+	// displays the data in the file according to the given key
+	int find_keys[] = { 1,141, 262, 415, 539, 621, 797, 854, 998 };
 
-	IOFile.clear();
-	IOFile.seekg(12170);
-	getline(IOFile, line);
-	cout << "offset: " << 12170 << " -> " << line << endl;
-	IOFile.clear();
-	IOFile.seekg(12275);
-	getline(IOFile, line);
-	cout << "offset: " << 12275 << " -> " << line << endl;
+	for (int key : find_keys) {
+		cout << "Person with "<< key<<" key: " << endl;
+		if (tree.IsEmpty()) {
+			cout << "Tree is empty" << endl;
+			break;
+		}
+		tree.Find(key);
+		if (tree.IsISet() && tree.IsPSet()) {
+			IOFile.clear();
+			IOFile.seekg(tree.Read().offset);
+			string line;
+			getline(IOFile, line);
+			cout << line << endl;
+		}
+		else {
+			cout << "Data not Found" << endl;
+		}
+		cout << endl;
+	}
+	
+	
 
-
-	cout << "Enter Offset: ";
-	cin >> offset;
-	IOFile.clear();
-	IOFile.seekg(offset);
-	getline(IOFile, line);
-	cout << "offset: " << offset << " -> " << line << endl;
-
-	cout << "Enter Offset: ";
-	cin >> offset;
-	IOFile.clear();
-	IOFile.seekg(offset);
-	getline(IOFile, line);
-	cout << "offset: " << offset << " -> " << line<<endl;
+	
 }
 
 void Main::closeFile()
 {
+	//closes the file
 	IOFile.close();
 }

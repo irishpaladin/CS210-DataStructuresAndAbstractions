@@ -22,7 +22,11 @@ public:
 	BTree();
 	bool IsPSet()const;
 	bool IsISet()const;
+	void ResetP();
 	Keys Read()const;//might need the offset as well
+	BTreeNode* GetP()const;//need for accessing the BTreeNode vartiables
+	void SetP(BTreeNode* q);
+	void SetI(int i);
 	void Write(Keys x);//might need to set offset as well
 	bool IsEmpty()const;
 	bool IsFull()const;

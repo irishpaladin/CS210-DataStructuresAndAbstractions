@@ -26,6 +26,24 @@ bool BTree::IsISet() const
 	return true;
 }
 
+void BTree::ResetP()
+{
+	//set p to root
+	p = root;
+}
+
+void BTree::SetP(BTreeNode* q)
+{
+	//sets p
+	p = q;
+}
+
+void BTree::SetI(int i)
+{
+	//sets i;
+	this->i = i;
+}
+
 Keys BTree::Read() const
 {
 	// returns the i-th value from the page pointed to by p
@@ -34,6 +52,11 @@ Keys BTree::Read() const
 	// i must be set prior to calling Read
 	// always call IsISet prior to calling Read
 	return p->page[i];
+}
+
+BTreeNode* BTree::GetP() const
+{
+	return p;
 }
 
 void BTree::Write(Keys x)

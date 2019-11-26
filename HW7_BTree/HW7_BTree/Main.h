@@ -3,11 +3,6 @@
 
 #include "BTree.h"
 
-class Main
-{
-private:
-
-};
 
 #endif // !MAIN_H
 

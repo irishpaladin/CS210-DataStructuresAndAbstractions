@@ -50,6 +50,7 @@ void Main::insertData()
 
 	// reads and stores data
 	while (getline(IOFile, line)) {
+		cout << IOFile.tellg()<<endl;
 		istringstream iss(line);
 		iss >> key;
 		if(tree.IsEmpty())
@@ -122,7 +123,6 @@ void Main::displayFindData()
 {
 	// displays the data in the file according to the given key
 	int find_keys[] = { 1,141, 262, 415, 539, 621, 797, 854, 998 };
-
 	for (int key : find_keys) {
 		cout << "Person with "<< key<<" key: " << endl;
 		if (tree.IsEmpty()) {

@@ -1,0 +1,130 @@
+Script started on Mon Sep 30 23:39:11 2019
+[?1034hbash-3.2$ exitg++ -c TuringMachine.cpp 
+bash-3.2$ g++ -c TuringMachine.cpp [C[C[C[C[C[C[C[C[C[Cexit[Kg++ -c TuringMachine.cpp [C[C[C[C[C[C[C[C[C[C./main[Kg++ Tape.o TuringMachine.o ActionTable.o -o main[3Pmain[C[C[C[C[C[C[C[C[C[C[C[C[C[C-c Tape.cpp[K
+bash-3.2$ g++ -c Tape.cppuringMachine.cpp [C[C[C[C[C[C[C[C[C[Cexit[Kg++ -c TuringMachine.cpp [C[C[C[C[C[C[C[C[C[C./main[Kg++ Tape.o TuringMachine.o ActionTable.o -o main[3Pmain[C[C[C[C[C[C[C[C[C[C[C[C[C[C-c Tape.cpp[KActionTable.cpp
+bash-3.2$ g++ -c ActionTable.cpp[7PTape.cppuringMachine.cpp [C[C[C[C[C[C[C[C[C[Cexit[Kg++ -c TuringMachine.cpp [C[C[C[C[C[C[C[C[C[C./main[Kg++ Tape.o TuringMachine.o ActionTable.o -o main
+bash-3.2$ ./main
+Enter Filename: count.y txt
+Enter Number of Commands (count has 6, subtract has 30): 6
+B 0 0 0 0 B 
+          ^
+B 0 0 0 0 B 
+        ^
+B 0 0 0 1 B 
+          ^
+B 0 0 0 1 B 
+        ^
+B 0 0 0 0 B 
+      ^
+B 0 0 1 0 B 
+        ^
+B 0 0 1 0 B 
+          ^
+B 0 0 1 0 B 
+        ^
+B 0 0 1 1 B 
+          ^
+B 0 0 1 1 B 
+        ^
+B 0 0 1 0 B 
+      ^
+B 0 0 0 0 B 
+    ^
+B 0 1 0 0 B 
+      ^
+B 0 1 0 0 B 
+        ^
+B 0 1 0 0 B 
+          ^
+B 0 1 0 0 B 
+        ^
+B 0 1 0 1 B 
+          ^
+B 0 1 0 1 B 
+        ^
+B 0 1 0 0 B 
+      ^
+B 0 1 1 0 B 
+        ^
+B 0 1 1 0 B 
+          ^
+B 0 1 1 0 B 
+        ^
+B 0 1 1 1 B 
+          ^
+B 0 1 1 1 B 
+        ^
+B 0 1 1 0 B 
+      ^
+B 0 1 0 0 B 
+    ^
+B 0 0 0 0 B 
+  ^
+B 1 0 0 0 B 
+    ^
+B 1 0 0 0 B 
+      ^
+B 1 0 0 0 B 
+        ^
+B 1 0 0 0 B 
+          ^
+B 1 0 0 0 B 
+        ^
+B 1 0 0 1 B 
+          ^
+B 1 0 0 1 B 
+        ^
+B 1 0 0 0 B 
+      ^
+B 1 0 1 0 B 
+        ^
+B 1 0 1 0 B 
+          ^
+B 1 0 1 0 B 
+        ^
+B 1 0 1 1 B 
+          ^
+B 1 0 1 1 B 
+        ^
+B 1 0 1 0 B 
+      ^
+B 1 0 0 0 B 
+    ^
+B 1 1 0 0 B 
+      ^
+B 1 1 0 0 B 
+        ^
+B 1 1 0 0 B 
+          ^
+B 1 1 0 0 B 
+        ^
+B 1 1 0 1 B 
+          ^
+B 1 1 0 1 B 
+        ^
+B 1 1 0 0 B 
+      ^
+B 1 1 1 0 B 
+        ^
+B 1 1 1 0 B 
+          ^
+B 1 1 1 0 B 
+        ^
+B 1 1 1 1 B 
+          ^
+B 1 1 1 1 B 
+        ^
+B 1 1 1 0 B 
+      ^
+B 1 1 0 0 B 
+    ^
+B 1 0 0 0 B 
+  ^
+B 0 0 0 0 B 
+^
+1 0 0 0 0 B 
+^
+bash-3.2$ exit
+exit
+
+Script done on Mon Sep 30 23:40:06 2019
